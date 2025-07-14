@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= list.title %></title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+  <div class="container">
+
+    <h1><%= list.title %></h1>
+
+    <form class="form" action="/app/saveTask/<%= list.id %>" method="post">
+      <input type="text" name="task" id="task" placeholder="Nova tarefa" required />
+      <button type="submit" class="btn-create">Adicionar</button>
+    </form>
+
+    <ul class="tasks">
+      <% list.tasks.forEach(task => { %>
+        <li class="task-item <%= task.completed ? 'completed' : '' %>">
+          <p><%= task.content %></p>
+          <form action="/app/updateTask/<%= list.id %>" method="post">
+            <input type="hidden" name="taskId" value="<%= task.id %>">
+            <button class="btn-complete" type="submit">Completar</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+
+    <form action="/app" method="get">
+      <button type="submit">Voltar para todas as listas</button>
+    </form>
+
+  </div>
+
+  <%- include('partials/footer') %>
+</body>
+
+</html>
